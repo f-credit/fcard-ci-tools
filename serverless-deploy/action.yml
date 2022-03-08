@@ -1,0 +1,68 @@
+name: "Serverless Deploy"
+description: "Deploy a service using serverless"
+inputs:
+  access_token:
+    description: "A Github Access Token to download private dependencies"
+    required: true
+
+  aws-access-key-id:
+    description: "The AWS access key id to identify the action"
+    required: true
+
+  aws-secret-access-key:
+    description: "The AWS secret access key to identify the action"
+    required: true
+
+  aws-region:
+    description: "The AWS region to deploy the service to"
+    required: false
+    default: "us-east-1"
+
+  aws-profile:
+    description: 'The profile to use the AWS credentials'
+    required: true
+    default: 'dev'
+
+  stage:
+    description: "The stage to deploy the service"
+    required: false
+    default: "dev"
+
+  cache_hit:
+    description: "A boolean indicating if there was a cache hit"
+    required: false
+    default: "false"
+
+  python_version:
+    description: "Python version to use"
+    required: false
+    default: "3.8"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python
+      run: ${{ github.action_path }}/../common/python-setup.sh
+      shell: bash
+      env:
+        PYTHON_VERSION: ${{ inputs.python_version }}
+
+    - name: Setup Github access token
+      run: ${{ github.action_path }}/../common/git-setup.sh
+      shell: bash
+      env:
+        ACCESS_TOKEN: ${{ inputs.access_token }}
+
+    - name: Install serverless dependencies
+      run: ${{ github.action_path }}/../common/install-node-deps.sh
+      shell: bash
+      env:
+        CACHE_HIT: ${{ inputs.cache_hit }}
+
+    - name: Deploy to the desired stage
+      run: npx serverless deploy --stack ${{ inputs.stage }} --aws-profile ${{ inputs.aws-profile }}
+      shell: bash
+      env:
+        AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
+        AWS_REGION: ${{ inputs.aws-region }}

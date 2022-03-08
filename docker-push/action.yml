@@ -1,0 +1,99 @@
+name: "Docker Push Deploy"
+description: "Docker push action to AWS ECR and deploy with CF"
+
+inputs:
+  aws-access-key-id:
+    description: "The AWS access key id to identify the action"
+    required: true
+
+  aws-secret-access-key:
+    description: "The AWS secret access key to identify the action"
+    required: true
+
+  aws-region:
+    description: "The AWS region to deploy the service to"
+    required: false
+    default: "us-east-1"
+
+  aws-account:
+    description: "AWS account number that holds the repository"
+    required: true
+
+  app-name:
+    description: "Container name that will be used to be deployed"
+    required: true
+    
+  app-port:
+    description: "Container exposed port"
+    required: true
+    default: 8000
+
+  stage:
+    description: "Application stage"
+    required: true
+    default: "dev"
+
+  tag:
+    description: "New tag for docker image"
+    required: false
+
+  cluster:
+    description: "ECS Cluster name to deploy the container"
+    required: true
+
+  workers:
+    description: "Number of workers to deploy"
+    required: true
+    default: 1
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup AWS Cli
+      run: sh ${{ github.action_path }}/../common/awscli-setup.sh
+      shell: bash
+
+    - name: Setup Docker
+      run: sh ${{ github.action_path }}/../common/docker-setup.sh
+      shell: bash
+
+    - name: Setup JQ command
+      run: sh ${{ github.action_path }}/../common/jq-setup.sh
+      shell: bash
+
+    - name: Build image
+      run: |
+        sh ${{ github.action_path }}/../common/docker/build.sh \
+          ${{ inputs.stage }} \
+          ${{ inputs.app-name }} \
+          ${{ inputs.app-port }} \
+          ${{ inputs.aws-access-key-id }} \
+          ${{ inputs.aws-region }} \
+          ${{ inputs.aws-secret-access-key }} \
+          ${{ inputs.workers }}
+      shell: bash
+
+    - name: Push image
+      run: |
+        sh ${{ github.action_path }}/../common/docker/push.sh \
+          ${{ inputs.tag }} \
+          ${{ inputs.app-name }} \
+          ${{ inputs.aws-account }} \
+          ${{ inputs.aws-access-key-id }} \
+          ${{ inputs.aws-secret-access-key }} \
+          ${{ inputs.aws-region }}
+      shell: bash
+
+    - name: Deploy with CF
+      env:
+        AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
+        AWS_DEFAULT_REGION: ${{ inputs.aws-region }}
+      run: |
+        sh ${{ github.action_path }}/../common/docker/deploy.sh \
+          ${{ inputs.aws-region }} \
+          ${{ inputs.aws-account }} \
+          ${{ inputs.app-name }} \
+          ${{ inputs.tag }} \
+          ${{ inputs.cluster }}
+      shell: bash

@@ -1,0 +1,18 @@
+name: Review published actions
+
+on: pull_request
+
+jobs:
+  consistency:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set repository as working directory
+      uses: actions/checkout@v2
+      with:
+        ref: master
+
+    - name: Set repository as working directory
+      uses: actions/checkout@v2
+
+    - name: Validate git is consistent
+      run: validation/git-consistency.sh

@@ -1,0 +1,55 @@
+name: "Test"
+description: "Test a service"
+inputs:
+  access_token:
+    description: "A Github Access Token to download private dependencies"
+    required: true
+
+  cache_hit:
+    description: "A boolean indicating if there was a cache hit"
+    required: false
+    default: "false"
+
+  test_command:
+    description: "The command to run the linter"
+    required: false
+    default: "poetry run make test"
+
+  python_version:
+    description: "Python version to use"
+    required: false
+    default: "3.8"
+
+  env_file:
+    description: "The path of the .env file"
+    required: false
+    default: ".env"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python
+      run: ${{ github.action_path }}/../common/python-setup.sh
+      shell: bash
+      env:
+        PYTHON_VERSION: ${{ inputs.python_version }}
+
+    - name: Setup Github access token
+      run: ${{ github.action_path }}/../common/git-setup.sh
+      shell: bash
+      env:
+        ACCESS_TOKEN: ${{ inputs.access_token }}
+
+    - name: Install dependencies
+      run: ${{ github.action_path }}/../common/install-deps.sh
+      shell: bash
+      env:
+        CACHE_HIT: ${{ inputs.cache_hit }}
+
+    - name: Install plugins
+      run: poetry plugin add poetry-dotenv-plugin
+      shell: bash
+
+    - name: Run the tests
+      run: POETRY_DOTENV_LOCATION=${{inputs.env_file}} ${{ inputs.test_command }}
+      shell: bash

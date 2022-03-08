@@ -1,0 +1,46 @@
+name: "Lint"
+description: "Lint a service"
+inputs:
+  access_token:
+    description: "A Github Access Token to download private dependencies"
+    required: true
+
+  cache_hit:
+    description: "A boolean indicating if there was a cache hit"
+    required: false
+    default: "false"
+
+  lint_command:
+    description: "The command to run the linter"
+    required: false
+    default: "poetry run make complexity"
+
+  python_version:
+    description: "Python version to use"
+    required: false
+    default: "3.8"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python
+      env:
+        PYTHON_VERSION: ${{ inputs.python_version }}
+      run: ${{ github.action_path }}/../common/python-setup.sh
+      shell: bash
+
+    - name: Setup Github access token
+      env:
+        ACCESS_TOKEN: ${{ inputs.access_token }}
+      run: ${{ github.action_path }}/../common/git-setup.sh
+      shell: bash
+
+    - name: Install dependencies
+      env:
+        CACHE_HIT: ${{ inputs.cache_hit }}
+      run: ${{ github.action_path }}/../common/install-deps.sh
+      shell: bash
+
+    - name: Run the linter
+      run: ${{ inputs.lint_command }}
+      shell: bash
