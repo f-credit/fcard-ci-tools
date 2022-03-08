@@ -9,7 +9,7 @@ jobs:
     - name: Set repository as working directory
       uses: actions/checkout@v2
       with:
-        ref: master
+        ref: main
 
     - name: Set repository as working directory
       uses: actions/checkout@v2

@@ -2,7 +2,7 @@
 
 cd $PWD
 
-BASE_HEAD=$(git rev-parse --short ${BASE_BRANCH:-'origin/master'})
+BASE_HEAD=$(git rev-parse --short ${BASE_BRANCH:-'origin/main'})
 CURRENT_HEAD=$(git rev-parse --short HEAD)
 DIFF_INFO=$(git diff --shortstat $BASE_HEAD..$CURRENT_HEAD ':(exclude)*.lock' ':(exclude)package-lock.json')
 
