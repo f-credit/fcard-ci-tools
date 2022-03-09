@@ -1,6 +1,6 @@
 # CI Tools
 
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/Fondeadora/ci-tools)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/erickdbrito/ci-tools)
 ![licensed|ethically](https://img.shields.io/badge/licensed-ethically-%234baaaa "Ethically licensed badge")
 
 This repository contains several scripts that automate common tasks executed in within CI
