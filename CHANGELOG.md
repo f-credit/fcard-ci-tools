@@ -1,3 +1,11 @@
+## v2.3.3 (2022-03-29)
+
+### Fix
+
+- **release**: update to main branch release
+- **CHANGELOG**: Fix changes history
+- Change user to test
+
 ## v2.3.2 (2022-02-08)
 
 ### Feat
