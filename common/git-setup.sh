@@ -1,7 +1,6 @@
 git config credential.helper store
 
-# echo -e "https://tech-fondeadora:$ACCESS_TOKEN@github.com" | sudo tee -a /etc/git-credentials
-echo -e "https://erickdbrito:$ACCESS_TOKEN@github.com" | sudo tee -a ~/.git-credentials
+echo -e "https://tech-fondeadora:$ACCESS_TOKEN@github.com" | sudo tee -a /etc/git-credentials
 # echo -e "https://tech-fondeadora:$ACCESS_TOKEN@github.com" | sudo tee -a .git/credentials
 
 # echo -e "[url \"https://$ACCESS_TOKEN@github.com/\"]\n\tinsteadOf = ssh://git@github.com/" | sudo tee -a /etc/gitconfig

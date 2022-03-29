@@ -1,6 +1,6 @@
 # CI Tools
 
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/erickdbrito/ci-tools)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/fondeadora/fcard-ci-tools)
 ![licensed|ethically](https://img.shields.io/badge/licensed-ethically-%234baaaa "Ethically licensed badge")
 
 This repository contains several scripts that automate common tasks executed in within CI
@@ -23,7 +23,7 @@ jobs:
           path: .venv
           key: ${{ runner.os }}-pip-${{ hashFiles('**/Pipfile.lock') }}
       - name: lint
-        uses: Fondeadora/ci-tools/lint
+        uses: Fondeadora/fcard-ci-tools/lint
         with:
           access_token: ${{ secrets.ACCESS_TOKEN }}
           cache_hit: ${{ steps.cache-dependencies.outputs.cache-hit }}
@@ -54,7 +54,7 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('**/Pipfile.lock') }}
 
       - name: Test the service
-        uses: Fondeadora/ci-tools/test@master
+        uses: Fondeadora/ci-tools/test@main
         with:
           access_token: ${{ secrets.ACCESS_TOKEN }}
           cache_hit: ${{ steps.cache-dependencies.outputs.cache-hit }}
@@ -93,7 +93,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
       - name: deploy
-        uses: Fondeadora/ci-tools/serverless-deploy@v1.1.1
+        uses: Fondeadora/fcard-ci-tools/serverless-deploy@main
         with:
           access_token: ${{ secrets.ACCESS_TOKEN }}
           stage: ${{ env.STAGE }}
@@ -126,8 +126,8 @@ jobs:
       - name: Get ci tools script
         uses: actions/checkout@v2
         with:
-          repository: Fondeadora/ci-tools
-          ref: master
+          repository: Fondeadora/fcard-ci-tools
+          ref: main
           token: ${{ secrets.CI_TOOLS_TOKEN }}
           path: ci-tools
 

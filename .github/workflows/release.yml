@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 env:
-  GIT_USER_EMAIL: erick.brito@apoyomultiple.com
-  GIT_USER_NAME: erickdbrito
+  GIT_USER_EMAIL: tech@fondeadora.com
+  GIT_USER_NAME: fondeadora-tech
 
 jobs:
   bump:
