@@ -23,6 +23,9 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Permissions
+      run: chmod +x ${{ github.action_path }}/../common/python-setup.sh
+      shell: bash  
     - name: Setup Python
       env:
         PYTHON_VERSION: ${{ inputs.python_version }}
