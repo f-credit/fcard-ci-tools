@@ -16,7 +16,7 @@ inputs:
   aws-region:
     description: "The AWS region to deploy the service to"
     required: false
-    default: "us-east-1"
+    default: "us-east-2"
 
   aws-profile:
     description: 'The profile to use the AWS credentials'
@@ -60,7 +60,7 @@ runs:
         CACHE_HIT: ${{ inputs.cache_hit }}
 
     - name: Deploy to the desired stage
-      run: npx serverless deploy --stack ${{ inputs.stage }} --aws-profile ${{ inputs.aws-profile }}
+      run: npx serverless deploy --stage ${{ inputs.stage }} --aws-profile ${{ inputs.aws-profile }}
       shell: bash
       env:
         AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
