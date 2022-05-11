@@ -1,3 +1,10 @@
+## v2.3.4 (2022-05-11)
+
+### Fix
+
+- change stage sls v3
+- Change to stage for sls v3
+
 ## v2.3.3 (2022-03-29)
 
 ### Fix
