@@ -1,3 +1,10 @@
+## v2.3.5 (2022-05-11)
+
+### Fix
+
+- add permission excecute
+- add permission excecute
+
 ## v2.3.4 (2022-05-11)
 
 ### Fix
