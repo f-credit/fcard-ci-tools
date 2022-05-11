@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 env:
-  GIT_USER_EMAIL: tech@fondeadora.com
-  GIT_USER_NAME: fondeadora-tech
+  GIT_USER_EMAIL: erick+ci-cd@fondeadora.com
+  GIT_USER_NAME: fcard-tech
 
 jobs:
   bump:
