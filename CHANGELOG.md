@@ -1,3 +1,13 @@
+## v2.3.6 (2022-05-12)
+
+### Fix
+
+- add +x permission
+- return base permissions
+- update index permissions
+- add +x permission double
+- add +x permission
+
 ## v2.3.5 (2022-05-11)
 
 ### Fix
