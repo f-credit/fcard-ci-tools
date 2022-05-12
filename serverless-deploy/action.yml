@@ -42,19 +42,19 @@ runs:
   using: "composite"
   steps:
     - name: Setup Python
-      run: ${{ github.action_path }}/../common/python-setup.sh
+      run: chmod +x ${{ github.action_path }}/../common/python-setup.sh && ${{ github.action_path }}/../common/python-setup.sh
       shell: bash
       env:
         PYTHON_VERSION: ${{ inputs.python_version }}
 
     - name: Setup Github access token
-      run: ${{ github.action_path }}/../common/git-setup.sh
+      run: chmod +x ${{ github.action_path }}/../common/git-setup.sh &&  ${{ github.action_path }}/../common/git-setup.sh
       shell: bash
       env:
         ACCESS_TOKEN: ${{ inputs.access_token }}
 
     - name: Install serverless dependencies
-      run: ${{ github.action_path }}/../common/install-node-deps.sh
+      run: chmod +x ${{ github.action_path }}/../common/install-node-deps.sh &&  ${{ github.action_path }}/../common/install-node-deps.sh 
       shell: bash
       env:
         CACHE_HIT: ${{ inputs.cache_hit }}
