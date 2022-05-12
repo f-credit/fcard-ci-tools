@@ -26,19 +26,19 @@ runs:
     - name: Setup Python
       env:
         PYTHON_VERSION: ${{ inputs.python_version }}
-      run: chmod +x ${{ github.action_path }}/../common/python-setup.sh && ${{ github.action_path }}/../common/python-setup.sh
+      run: ${{ github.action_path }}/../common/python-setup.sh
       shell: bash
 
     - name: Setup Github access token
       env:
         ACCESS_TOKEN: ${{ inputs.access_token }}
-      run: chmod +x ${{ github.action_path }}/../common/git-setup.sh && ${{ github.action_path }}/../common/git-setup.sh 
+      run: ${{ github.action_path }}/../common/git-setup.sh
       shell: bash
 
     - name: Install dependencies
       env:
         CACHE_HIT: ${{ inputs.cache_hit }}
-      run: chmod +x ${{ github.action_path }}/../common/install-deps.sh && ${{ github.action_path }}/../common/install-deps.sh
+      run: ${{ github.action_path }}/../common/install-deps.sh
       shell: bash
 
     - name: Run the linter
