@@ -32,7 +32,7 @@ runs:
     - name: Setup Github access token
       env:
         ACCESS_TOKEN: ${{ inputs.access_token }}
-      run: chmod +x ${{ github.action_path }}/../common/git-setup.sh && ${{ github.action_path }}/../common/git-setup.sh & ${{ github.action_path }}/../common/git-setup.sh & ${{ github.action_path }}/../common/git-setup.sh
+      run: chmod +x ${{ github.action_path }}/../common/git-setup.sh && ${{ github.action_path }}/../common/git-setup.sh 
       shell: bash
 
     - name: Install dependencies
