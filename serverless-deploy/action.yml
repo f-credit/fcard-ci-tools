@@ -60,7 +60,7 @@ runs:
         CACHE_HIT: ${{ inputs.cache_hit }}
 
     - name: Deploy to the desired stage
-      run: npx serverless deploy --stage ${{ inputs.stage }} --aws-profile ${{ inputs.aws-profile }}
+      run: npx serverless deploy --stage ${{ inputs.stage }}
       shell: bash
       env:
         AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
