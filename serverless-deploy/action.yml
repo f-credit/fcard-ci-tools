@@ -59,10 +59,24 @@ runs:
       env:
         CACHE_HIT: ${{ inputs.cache_hit }}
 
-    - name: Deploy to the desired stage
-      run: npx serverless deploy --stage ${{ inputs.stage }}
-      shell: bash
+    - name: Setup AWS credentials
       env:
         AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
         AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
         AWS_REGION: ${{ inputs.aws-region }}
+        AWS_PROFILE: ${{ inputs.aws-profile }}
+      run: |
+        mkdir ~/.aws
+        echo "[default]" >> ~/.aws/config
+        echo "region = $AWS_REGION" >> ~/.aws/config
+        echo "[$AWS_PROFILE]" >> ~/.aws/credentials
+        echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+        echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials  
+        echo "region = $AWS_REGION" >> ~/.aws/credentials
+      shell: bash
+    - name: Deploy to the desired stage
+      run: AWS_SDK_LOAD_CONFIG=1 npx serverless deploy --stage ${{ inputs.stage }} --aws-profile $AWS_PROFILE
+      shell: bash
+      env:
+        AWS_STACK: ${{ inputs.aws-stack }}
+        AWS_PROFILE: ${{ inputs.aws-profile }}
