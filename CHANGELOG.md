@@ -1,3 +1,10 @@
+## v2.3.8 (2022-05-18)
+
+### Fix
+
+- add aws profile in deploy
+- add aws profile in deploy
+
 ## v2.3.7 (2022-05-18)
 
 ### Fix
