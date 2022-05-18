@@ -1,3 +1,10 @@
+## v2.3.7 (2022-05-18)
+
+### Fix
+
+- delete aws profile in deploy
+- delete aws profile in deploy
+
 ## v2.3.6 (2022-05-12)
 
 ### Fix
