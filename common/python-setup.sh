@@ -3,4 +3,4 @@ for VERSION in "/opt/hostedtoolcache/Python/$PYTHON_VERSION"*; do
     echo "$VERSION/x64/bin" >> $GITHUB_PATH
 done
 
-pip3 install -q poetry==1.2.0a2
+pip3 install -q poetry==1.3.2
