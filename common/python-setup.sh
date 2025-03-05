@@ -2,8 +2,6 @@ for VERSION in "/opt/hostedtoolcache/Python/$PYTHON_VERSION"*; do
     export PATH="$VERSION/x64/bin:$PATH"
     echo "$VERSION/x64/bin" >> $GITHUB_PATH
 done
-if [ -f "poetry.lock" ]; then
-    python3 -m pip install --user pipx
-    pipx install poetry==1.8.5
-    pipx inject poetry poetry-dotenv-plugin
-fi
+
+pip3 install -q poetry==1.8.5
+poetry self add poetry-dotenv-plugin
