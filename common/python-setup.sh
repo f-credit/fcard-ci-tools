@@ -7,4 +7,5 @@ if [ -f "poetry.lock" ]; then
     python3 -m pip install --user pipx
     pipx install poetry==2.1.1
     pipx inject poetry poetry-dotenv-plugin
+    pipx inject poetry poetry-plugin-export
 fi
