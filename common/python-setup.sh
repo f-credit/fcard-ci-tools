@@ -3,9 +3,12 @@ for VERSION in "/opt/hostedtoolcache/Python/$PYTHON_VERSION"*; do
     echo "$VERSION/x64/bin" >> $GITHUB_PATH
 done
 
-if [ -f "poetry.lock" ]; then
-    python3 -m pip install --user pipx
-    pipx install poetry==2.1.1
-    pipx inject poetry poetry-dotenv-plugin
-    pipx inject poetry poetry-plugin-export
+if [ -f "uv.lock" ]; then
+    if [ -n "$UV_VERSION" ]; then
+        UV_INSTALLER="https://astral.sh/uv/$UV_VERSION/install.sh"
+    else
+        UV_INSTALLER="https://astral.sh/uv/install.sh"
+    fi
+    curl -LsSf "$UV_INSTALLER" | env UV_INSTALL_DIR="$HOME/.local/bin" sh
+    echo "$HOME/.local/bin" >> $GITHUB_PATH
 fi

@@ -1,3 +1,3 @@
 if [ $CACHE_HIT != 'true' ]; then
-    poetry install
+    uv sync
 fi

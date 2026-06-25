@@ -36,7 +36,17 @@ inputs:
   python_version:
     description: "Python version to use"
     required: false
-    default: "3.9"
+    default: "3.13"
+
+  node_version:
+    description: "Node version to use"
+    required: false
+    default: "22"
+
+  pnpm_version:
+    description: "pnpm version to activate via corepack"
+    required: false
+    default: "10.4.1"
 
 runs:
   using: "composite"
@@ -53,11 +63,17 @@ runs:
       env:
         ACCESS_TOKEN: ${{ inputs.access_token }}
 
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node_version }}
+
     - name: Install serverless dependencies
       run: ${{ github.action_path }}/../common/install-node-deps.sh
       shell: bash
       env:
         CACHE_HIT: ${{ inputs.cache_hit }}
+        PNPM_VERSION: ${{ inputs.pnpm_version }}
 
     - name: Setup AWS credentials
       env:
@@ -75,7 +91,7 @@ runs:
         echo "region = $AWS_REGION" >> ~/.aws/credentials
       shell: bash
     - name: Deploy to the desired stage
-      run: AWS_SDK_LOAD_CONFIG=1 npx serverless deploy --stage ${{ inputs.stage }} --aws-profile $AWS_PROFILE
+      run: AWS_SDK_LOAD_CONFIG=1 pnpm exec serverless deploy --stage ${{ inputs.stage }} --aws-profile $AWS_PROFILE
       shell: bash
       env:
         AWS_STACK: ${{ inputs.aws-stack }}
